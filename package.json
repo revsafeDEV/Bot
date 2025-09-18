@@ -1,0 +1,25 @@
+{
+  "name": "community-bot",
+  "version": "1.0.0",
+  "description": "Bot Discord community z systemem komend i ticketów",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": ["discord", "bot", "community", "tickets", "moderation"],
+  "author": "revsafeDEV",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.9.0"
+  }
+}
