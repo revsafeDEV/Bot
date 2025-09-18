@@ -56,7 +56,7 @@ module.exports = {
             }
         }
         
-        // Obsługa button interactions (dla systemu ticketów)
+        // Obsługa button interactions
         else if (interaction.isButton()) {
             const buttonId = interaction.customId;
             
@@ -73,6 +73,12 @@ module.exports = {
                 const ticketHandler = require('../utils/ticketHandler');
                 await ticketHandler.deleteTicket(interaction);
             }
+            
+            // System konfiguracji
+            else if (buttonId.startsWith('config_') || buttonId === 'back_to_main' || buttonId === 'confirm_reset' || buttonId === 'cancel_reset') {
+                const configCommand = require('../commands/config');
+                await configCommand.handleButtonInteraction(interaction);
+            }
         }
         
         // Obsługa select menu interactions
@@ -80,6 +86,18 @@ module.exports = {
             if (interaction.customId === 'ticket_category') {
                 const ticketHandler = require('../utils/ticketHandler');
                 await ticketHandler.handleCategorySelect(interaction);
+            }
+            else if (interaction.customId === 'role_select' || interaction.customId === 'channel_select') {
+                const configCommand = require('../commands/config');
+                await configCommand.handleSelectMenuInteraction(interaction);
+            }
+        }
+        
+        // Obsługa modal interactions
+        else if (interaction.isModalSubmit()) {
+            if (interaction.customId.startsWith('config_modal_')) {
+                const configCommand = require('../commands/config');
+                await configCommand.handleModalSubmit(interaction);
             }
         }
     },
