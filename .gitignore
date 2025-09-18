@@ -85,6 +85,9 @@ logs
 
 # Runtime data files
 data/*.json
+data/economy.json
+data/tickets.json
+data/config.json
 
 # OS generated files
 .DS_Store

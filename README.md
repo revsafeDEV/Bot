@@ -23,8 +23,10 @@
 ### 🛡️ System moderacji
 - **Kick** - Wyrzucanie użytkowników z serwera
 - **Ban** - Banowanie użytkowników (z opcją usuwania wiadomości)
+- **Unban** - Usuwanie banów użytkowników
+- **Timeout** - Czasowe wyciszanie użytkowników
 - **Clear** - Czyszczenie wiadomości z kanałów
-- **Timeout** - Wyciszanie użytkowników
+- **Slowmode** - Ustawianie trybu wolnego na kanałach
 
 ### 🎫 System ticketów
 - **Automatyczne tworzenie** kanałów ticketów
@@ -36,6 +38,8 @@
 ### 📊 Narzędzia informacyjne
 - **UserInfo** - Szczegółowe informacje o użytkownikach
 - **ServerInfo** - Statystyki i informacje o serwerze
+- **Avatar** - Wyświetlanie awatarów użytkowników (globalny i serwerowy)
+- **Ping** - Sprawdzanie latencji bota i API Discord
 - **Statystyki ticketów** - Monitoring systemu wsparcia
 
 ### ⚙️ System konfiguracji
@@ -43,6 +47,18 @@
 - **Konfiguracja kanałów** (Logi, Kategoria ticketów)
 - **Ustawienia bota** (Prefix, kolory)
 - **Reset konfiguracji** do wartości domyślnych
+
+### 🎮 System rozrywkowy
+- **8ball** - Magiczna kula 8 z przewidywaniami
+- **Dice** - Rzucanie kostkami (D4, D6, D8, D10, D12, D20, D100)
+- **Poll** - Interaktywne głosowania z przyciskami
+
+### 💰 System ekonomiczny
+- **Balance** - Sprawdzanie stanu konta użytkowników
+- **Daily** - Dzienne nagrody monetarne
+- **Pay** - Przelewy między użytkownikami
+- **Gamble** - Gra w kości z ryzykiem
+- **Leaderboard** - Ranking najbogatszych użytkowników
 
 ## 🔧 Wymagania
 
@@ -143,7 +159,10 @@ Po uruchomieniu użyj komendy `/config` do ustawienia:
 |---------|------|---------------------|
 | `/kick <użytkownik> [powód]` | Wyrzuca użytkownika z serwera | Wyrzucanie członków |
 | `/ban <użytkownik> [powód] [dni_wiadomości]` | Banuje użytkownika | Banowanie członków |
+| `/unban <user_id> [powód]` | Usuwa ban użytkownika | Banowanie członków |
+| `/timeout <użytkownik> <czas> [powód]` | Wycisza użytkownika czasowo | Moderowanie członków |
 | `/clear <liczba> [użytkownik]` | Usuwa wiadomości z kanału | Zarządzanie wiadomościami |
+| `/slowmode <czas> [kanał] [powód]` | Ustawia tryb wolny | Zarządzanie kanałami |
 
 ### 📊 Informacje
 
@@ -151,6 +170,8 @@ Po uruchomieniu użyj komendy `/config` do ustawienia:
 |---------|------|---------------------|
 | `/userinfo [użytkownik]` | Informacje o użytkowniku | Brak |
 | `/serverinfo` | Informacje o serwerze | Brak |
+| `/avatar [użytkownik]` | Wyświetla awatar użytkownika | Brak |
+| `/ping` | Sprawdza latencję bota | Brak |
 
 ### 🎫 System ticketów
 
@@ -169,6 +190,24 @@ Po uruchomieniu użyj komendy `/config` do ustawienia:
 | `/config show` | Wyświetla aktualną konfigurację | Administrator |
 | `/config set <klucz> <wartość>` | Ustawia wartość konfiguracji | Administrator |
 | `/config reset` | Resetuje konfigurację | Administrator |
+
+### 🎮 Rozrywka
+
+| Komenda | Opis | Uprawnienia wymagane |
+|---------|------|---------------------|
+| `/8ball <pytanie>` | Zadaj pytanie magicznej kuli | Brak |
+| `/dice [ilość] [strony]` | Rzuca kostkami | Brak |
+| `/poll <pytanie> <opcje...>` | Tworzy interaktywne głosowanie | Brak |
+
+### 💰 Ekonomia
+
+| Komenda | Opis | Uprawnienia wymagane |
+|---------|------|---------------------|
+| `/economy balance [użytkownik]` | Sprawdza stan konta | Brak |
+| `/economy daily` | Odbiera dzienne monety | Brak |
+| `/economy pay <użytkownik> <kwota>` | Przelewa monety | Brak |
+| `/economy gamble <kwota>` | Gra w kości | Brak |
+| `/economy leaderboard` | Ranking najbogatszych | Brak |
 
 ## 🎫 System ticketów
 
@@ -202,13 +241,22 @@ Po uruchomieniu użyj komendy `/config` do ustawienia:
 ```
 Bot/
 ├── commands/           # Komendy slash
-│   ├── ban.js
-│   ├── clear.js
-│   ├── config.js
-│   ├── kick.js
-│   ├── serverinfo.js
-│   ├── ticket.js
-│   └── userinfo.js
+│   ├── 8ball.js         # Magiczna kula
+│   ├── avatar.js        # Awatary użytkowników
+│   ├── ban.js           # Banowanie
+│   ├── clear.js         # Czyszczenie wiadomości
+│   ├── config.js        # Konfiguracja
+│   ├── dice.js          # Rzucanie kostkami
+│   ├── economy.js       # System ekonomiczny
+│   ├── kick.js          # Wyrzucanie
+│   ├── ping.js          # Latencja bota
+│   ├── poll.js          # Głosowania
+│   ├── serverinfo.js    # Info o serwerze
+│   ├── slowmode.js      # Tryb wolny
+│   ├── ticket.js        # System ticketów
+│   ├── timeout.js       # Wyciszanie
+│   ├── unban.js         # Odbanowywanie
+│   └── userinfo.js      # Info o użytkowniku
 ├── events/             # Event handlers
 │   └── interactionCreate.js
 ├── utils/              # Narzędzia pomocnicze
@@ -281,13 +329,15 @@ Jeśli napotkasz problemy lub masz pytania:
 
 ## 📝 Changelog
 
-### v1.0.0 (2024-09-18)
-- ✨ Pierwszy release
-- 🛡️ System moderacji (kick, ban, clear)
-- 🎫 Kompletny system ticketów
-- 📊 Komendy informacyjne (userinfo, serverinfo)
-- ⚙️ System konfiguracji
-- 📚 Kompletna dokumentacja
+### v2.0.0 (2024-09-18)
+- ✨ Rozszerzony release z nowymi komendami
+- 🛡️ Rozbudowany system moderacji (timeout, unban, slowmode)
+- 🎫 Kompletny system ticketów z panelami
+- 📊 Rozszerzone komendy informacyjne (avatar, ping)
+- 🎮 System rozrywkowy (8ball, dice, poll)
+- 💰 System ekonomiczny z monetami
+- ⚙️ Zaawansowany system konfiguracji
+- 📚 Pełna dokumentacja i przykłady
 
 ## 📄 Licencja
 
