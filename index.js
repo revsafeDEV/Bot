@@ -3,6 +3,14 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
+// Import keep alive server for Replit hosting
+const keepAlive = require('./keep_alive');
+
+// Start the keep alive server (only for Replit hosting)
+if (process.env.REPLIT_DB_URL || process.env.REPL_ID) {
+    keepAlive();
+}
+
 // Tworzenie klienta Discord
 const client = new Client({
     intents: [

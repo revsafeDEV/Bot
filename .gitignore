@@ -110,3 +110,10 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Replit specific files
+.replit_zip_error_log.txt
+.breakpoints
+.upm/
+poetry.lock
+.pythonlibs
